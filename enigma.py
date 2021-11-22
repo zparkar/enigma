@@ -325,21 +325,18 @@ class Enigma:
 
 if __name__ == "__main__":
     my_enigma = Enigma()
-    my_enigma.add_components("C", "V","II","III","IV")
-    my_enigma.add_settings(["HL","MO","AJ"],"AGZX",(9,14,3,4))
-    print(my_enigma.encrypt_decrypt_message("PCBCPMSNVOBXFVLPYWRWVDUIPHQFGPCPBIDADGKKN"))
-    my_enigma.reset()
-    my_enigma.add_components("A", "III","V","IV","Gamma")
-    my_enigma.add_settings(["CX","BZ","SR"],"UKTC",(4,20,6,9))
-    print(my_enigma.encrypt_decrypt_message("XUHQKHYIZMDHNGFTIXEOIYUGXLUIKXDATSPEVUXNJGLUFW"))
-    my_enigma.reset()
-    my_enigma.add_components("B", "II","I","IV","V","Beta","IV","I","III")
-    my_enigma.add_settings(["NI","YW","DG","PK"],"HELPASAP",(1,2,24,2,7,3,4,5))
-    print(my_enigma.encrypt_decrypt_message("KOEUWWBIPWUYEDLLJPCLOOKXAGGOKPFXFFY"))
-    my_enigma.reset()
-    my_enigma.add_components("B","I","Beta","Gamma","Beta","III","I","V","IV","V","I","III","IV","V")
-    my_enigma.add_settings(["NI","YW","DG","PK"],"COFFEEISGREAT",(9,8,6,7,3,2,9,12,23,21,3,4,5))
-    print(my_enigma.encrypt_decrypt_message("CVXZPDQIYSBOYUPVBIPPGQHZPFQTOKQO"))
+    my_reflector = input("Specify a reflector: ").title()
+    my_rotors = tuple(input("Specify the rotors e.g III,II,I : ").split(','))
+    my_enigma.add_components(my_reflector, *my_rotors)
+    settings = input("Do you want to adjust the enigma settings?: ")
+    if settings.title()=="Y":
+      my_plugboard = [item for item in input("Specify plugboard settings e.g HL,MO,QV: ").split(',')]
+      my_rotor_positions = input("Specify rotor positions e.g ABCD: ")
+      my_ring_settings = tuple(map(int,input("Specify ring settings for each rotor e.g 1,1,3,4: ").split(',')))
+      my_enigma.add_settings(my_plugboard,my_rotor_positions,my_ring_settings)
+    message = input("Enter message to encrypt: ")
+    print(my_enigma.encrypt_decrypt_message(message))
+    
     
     
     
